@@ -48,18 +48,18 @@ int main()
     // Filtered departments (WHERE dept_name = 'Support')
     vector<int> engineeringDeptIds;
 
-#pragma omp parallel for
+    #pragma omp parallel for
     for (int i = 0; i < departments.size(); i++)
     {
         if (departments[i].dept_name == "Support")
         {
-#pragma omp critical
+            #pragma omp critical
             engineeringDeptIds.push_back(departments[i].dept_id);
         }
     }
 
 // Join operation (parallel)
-#pragma omp parallel for
+    #pragma omp parallel for
     for (int i = 0; i < employees.size(); i++)
     {
         for (int j = 0; j < engineeringDeptIds.size(); j++)
@@ -69,7 +69,7 @@ int main()
                 string empName = employees[i].name;
                 string deptName = "Support"; // already filtered
 
-#pragma omp critical
+                #pragma omp critical
                 result.push_back({empName, deptName});
             }
         }
